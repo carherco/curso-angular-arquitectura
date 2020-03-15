@@ -26,9 +26,9 @@
 
 - Gestión del estado en Angular
 
-  - Patrón Property Bag
-  - Patrón State Management Service (Service Cache)
-  - Patrón State Management Service with Notifications
+  - [Patrón Property Bag](property-bag.md)
+  - [Patrón State Management Service (Service Cache)](service-cached.md)
+  - [Patrón State Management Service with Notifications](service-subject.md)
 
 - Gestión del estado avanzado en Angular
 
