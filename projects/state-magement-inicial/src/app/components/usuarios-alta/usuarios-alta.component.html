@@ -1,0 +1,16 @@
+<h3>Añade un usuario a la lista</h3>
+<form>
+  <div>
+    <label for="nombre">Nombre:</label>
+    <input class="form-control" type="text" id="nombre" name="name" [(ngModel)]="user.name" placeholder="Escribe el nombre...">
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input class="form-control" type="text" id="email" name="email" [(ngModel)]="user.email" placeholder="Email...">
+  </div>
+  <div>
+    <label for="phone">Phone:</label>
+    <input class="form-control" type="text" id="phone" name="phone" [(ngModel)]="user.phone" placeholder="Phone...">
+  </div>
+  <button class="btn btn-primary" type="button" (click)="add()">Añadir</button>
+</form>

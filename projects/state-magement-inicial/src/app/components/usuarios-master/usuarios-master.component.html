@@ -1,0 +1,38 @@
+<div class="row">
+  <app-usuarios-alta
+    [user]="newUser"
+    (addEvent)="add($event)">
+  </app-usuarios-alta>
+</div>
+
+<div class="row" class="col-12" *ngIf="message">
+  <div class="alert alert-success" role="alert">
+    {{ message }}
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+
+<div class="row">
+
+  <div class="col-6">
+    <app-usuarios-listado
+      [users]="users"
+      [selectedUser]="selectedUser"
+      (selectEvent)="select($event)"
+      (deleteEvent)="delete($event)">
+    </app-usuarios-listado>
+  </div>
+
+  <div *ngIf="selectedUser" class="col-6">
+    <app-usuarios-detalle
+      [user]="selectedUser"
+      (saveEvent)="update($event)"
+      (eliminarEvent)="delete($event)">
+    </app-usuarios-detalle>
+  </div>
+
+</div>
+

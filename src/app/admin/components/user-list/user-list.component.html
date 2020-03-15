@@ -1,0 +1,38 @@
+<button class="btn btn-primary" (click)="logout()">Salir</button>
+
+<h2>
+  Listado de usuarios
+</h2>
+
+<ul class="nav nav-pills">
+  <li role="presentation"><a routerLink="/admin" routerLinkActive="active">Home</a></li>
+  <li role="presentation"><a routerLink="/user" routerLinkActive="active">Gestión de usuarios</a></li>
+  <li role="presentation">Gestión de Roles</li>
+  <li role="presentation">Gestión de Permisos</li>
+</ul>
+
+
+
+<a routerLink="/user/add" class="btn btn-primary">Añadir usuario</a>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Foto</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.first_name}}</td>
+      <td>{{user.last_name}}</td>
+      <td><img [src]="user.avatar" /></td>
+      <td>
+        <a routerLink="/user/{{user.id}}" class="btn btn-primary">Editar</a>
+        <button  class="btn btn-primary">Borrar</button>
+
+      </td>
+    </tr>
+  </tbody>
+</table>

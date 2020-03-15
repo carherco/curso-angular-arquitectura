@@ -1,0 +1,17 @@
+.toolbar {
+  height: 64px;
+  /* Con fixed y z-index estará siempre encima del contenido. */
+  position: fixed;
+  z-index: 2;
+}
+
+.sidenav-container {
+  /* Misma altura que la toolbar para que el contenido empiece justo debajo */
+  margin-top: 64px;
+  height: 100%;
+}
+
+.sidenav-content {
+  padding-left: 20px;
+}
+

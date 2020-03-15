@@ -1,0 +1,9 @@
+<div [@openClose]="isOpen ? 'open' : 'closed'">
+  <p>The box is now {{ isOpen ? 'Open' : 'Closed' }}!</p>
+</div>
+<button (click)="toggle()">Toggle</button>
+
+<div [@openCloseKeyframes]="isOpen ? 'open' : 'closed'">
+  <p>The box is now {{ isOpen ? 'Open' : 'Closed' }}!</p>
+</div>
+<button (click)="toggle()">Toggle</button>

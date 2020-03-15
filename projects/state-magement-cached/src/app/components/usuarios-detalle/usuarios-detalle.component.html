@@ -1,0 +1,17 @@
+<h3>Datos del usuario {{ user.name }} </h3>
+<div><label>Id: </label> {{ user.id }} </div>
+<div>
+  <label>Nombre: </label>
+  <input class="form-control" placeholder="name" name="name" [(ngModel)]="user.name"/>
+</div>
+<div>
+  <label>Email: </label>
+  <input class="form-control" placeholder="email" name="email" [(ngModel)]="user.email"/>
+</div>
+<div>
+  <label>Phone: </label>
+  <input class="form-control" placeholder="phone" name="phone" [(ngModel)]="user.phone"/>
+</div>
+
+<button class="btn btn-primary" (click)="save()">Guardar</button>
+<button class="btn btn-danger" (click)="eliminar()">Eliminar</button>

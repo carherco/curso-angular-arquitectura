@@ -1,0 +1,17 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Marble diagrams
+  </h1>
+</div>
+
+<div>
+  <form [formGroup]="form">
+    <textarea rows="10" cols="100" name="textarea" formControlName="textarea"></textarea>
+  </form>
+</div>
+
+<div>
+    <app-diagram [data]="data$ | async"></app-diagram>
+</div>
+

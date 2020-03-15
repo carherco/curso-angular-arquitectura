@@ -1,0 +1,23 @@
+<h3>Lista de usuarios</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users"
+            (click)="selectUser(user)"
+            [class.seleccionado]="user.id === selectedUser?.id">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone }}</td>
+          <td><button class="btn btn-danger" (click)="delete(user)">Eliminar</button></td>
+        </tr>
+    </tbody>
+  </table>
