@@ -1,4 +1,4 @@
-# Servicio con cacheo
+# Servicio con cacheo
 
 Este patrón se utiliza a menudo cuando los datos que se necesitan provienen de una API.
 

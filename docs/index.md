@@ -11,13 +11,13 @@
     - Shared Module
     - Feature Module
 
-- [Routing](routing.md)
+- [Routing](routing.md) y [lazy loading](lazy-loading.md)
 
   - Overview y características
   - Rutas anidadas
   - Routing Module
   - Eager Module
-  - [Lazy Module](lazy-loading.md)
+  - Lazy Module
 
 - Comunicación entre componentes
 
@@ -46,6 +46,8 @@
 - [Componentes dinámicos en Angular](dynamic-components.md)
 
 Documentación oficial de Angular: https://angular.io/docs
+
+Otra documentación propia: https://github.com/carherco/curso-angular
 
 Mis datos de contacto:
 
