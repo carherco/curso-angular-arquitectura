@@ -1,4 +1,33 @@
-# Módulos
+# Arquitectura de la aplicación
+
+Goolge recomienda que la arquitectura de nuestra aplicación siga las recomendaciones LIFP
+
+- Locate
+- Identify
+- Flat
+- T-DRY (Try to be DRY)
+
+## Locate
+
+"Do make locating code intuitive, simple, and fast."
+
+## Identify
+
+"Do name the file such that you instantly know what it contains and represents."
+
+Aquí recomiendan aplicar el principio de Single Responsability en cada archivo de nuestra aplicación.
+
+## Flat
+
+"Do keep a flat folder structure as long as possible."
+
+Aconsejan crear subdirectorios cuando una carpeta tenga más de 7 elementos.
+
+## Try to be DRY
+
+"Do be DRY."
+
+Pero no lo seas si para ser DRY debes sacrificar la legibilidad del código.
 
 ## Root Module
 
