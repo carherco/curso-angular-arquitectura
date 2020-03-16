@@ -1,15 +1,14 @@
-import { User } from 'app/model/TypicodeUser';
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
+import { Component, OnInit } from "@angular/core";
+import { UserService } from "../../../services/user.service";
+import { User } from "../../../model/user";
 
 @Component({
-  selector: 'user-crud-basic',
-  templateUrl: './user-crud-basic.component.html',
-  styleUrls: ['./user-crud-basic.component.css']
+  selector: "user-crud-basic",
+  templateUrl: "./user-crud-basic.component.html",
+  styleUrls: ["./user-crud-basic.component.css"]
 })
 export class UserCrudBasicComponent implements OnInit {
-
-  title = 'CRUD BÁSICO';
+  title = "CRUD BÁSICO";
   users = [];
   lastId = 10;
   newUser: User;
@@ -19,16 +18,13 @@ export class UserCrudBasicComponent implements OnInit {
   constructor(private userService: UserService) {
     this.newUser = {
       id: this.lastId + 1,
-      name: ''
+      name: ""
     };
 
-    this.userService.getAll().subscribe(
-      users => this.users = users
-    );
+    this.userService.getAll().subscribe(users => (this.users = users));
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSelect(user: User): void {
     this.selectedUser = user;
@@ -37,14 +33,14 @@ export class UserCrudBasicComponent implements OnInit {
   add(): void {
     console.log(this.newUser);
     this.users.push(this.newUser);
-    this.lastId = this.lastId +1;
+    this.lastId = this.lastId + 1;
     this.resetNewHero();
   }
 
   resetNewHero() {
     this.newUser = {
       id: this.lastId + 1,
-      name: ''
+      name: ""
     };
   }
 
@@ -62,7 +58,6 @@ export class UserCrudBasicComponent implements OnInit {
    */
   delete(user: User) {
     //this.users = this.users.filter(function(el) { return el.id != user.id; });
-    this.users = this.users.filter( el => el.id != user.id );
+    this.users = this.users.filter(el => el.id != user.id);
   }
-
 }
