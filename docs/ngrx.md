@@ -6,17 +6,9 @@ La librería NgRx nos ayuda a utilizar Redux en nuestro proyecto de Angular.
 
 Para utilizar NgRx, necesitamos isntalar las propias librerías más algunas herramientas de desarrollo que añaden potencia al CLI de Angular.
 
-> npm install @angular-devkit/schematics --save-dev
+El comando add del CLI nos facilita la tarea.
 
-> npm install @ngrx/schematics --save-dev
-
-> ng config cli.defaultCollection @ngrx/schematics
-
-> npm install @ngrx/store --save
-
-> npm install @ngrx/store-devtools --save
-
-> npm install @ngrx/router-store --save
+> ng add @ngrx/store
 
 ## Comandos
 
@@ -24,19 +16,19 @@ Ahora con el CLI de Angular podemos hacer más cosas:
 
 - Generar el store raíz:
 
-> ng g st RootState ‐‐root ‐m app.module.ts ‐‐spec false
+> ng g st RootState
 
 - Generar el reductor y las acciones y el interface para una funcionalidad concreta: 
 
 > cd .\src\app\reducers\
 
-> ng g r Hero ‐‐spec false ‐r index.ts 
+> ng g r user
 
-> ng g a Hero ‐‐spec false
+> ng g a user 
 
 ## Adaptación a la librería
 
-### En el módulo
+### En el módulo
 
 ```ts
 import { StoreModule } from '@ngrx/store';
@@ -44,48 +36,50 @@ import { StoreDevtoolsModule } from '@ngrx/store‐devtools';
 import { metaReducers, reducers } from './reducers';
 @NgModule({
   imports: [
-    StoreModule.forRoot(rootReducers, { metaReducers }),
-    StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+     StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreRouterConnectingModule.forRoot({ routerState: RouterState.Minimal })
   ]
 })
 ```
 
-### State
+### State
 
 Lo primero que haremos será definir un interfaz para nuestro state. Se suele llamar State pero lo llamaré RootState en este documento.
 
 ```ts
+// En el fichero reducers/index.ts
 export interface RootState {
-  router: any;
-  global: GlobalState;
-  cars: CarsState;
+  users: UsersState;
+  invoices: InvoicesState;
+  ...
 }
 ```
 
-### reducers
+### reducers
 
 La librería necesita un mapeo entre cada propiedad del state y la función reductora asociada:
 
 ```ts
+// En el fichero reducers/index.ts
 export const rootReducers: ActionReducerMap<RootState> = {
-  router: routerReducer,
-  global: globalreducer,
-  cars: carsReducer
+  users: usersReducer;
+  invoices: invoicesReducer;
 };
 ```
 
 Las funciones reductoras estarán en un fichero a parte. No deben estar incluidas en ninguna clase.
 
 ```ts
-export function globalReducer(state = initialState, action: GlobalActions): GlobalState {
+export function reducer(state = initialState, action: Action): State {
   switch (action.type) {
-    case GlobalActionTypes.SendUserMessage:
-      return { ...state, userMessage: action.payload };
-    case GlobalActionTypes.IsLoginNeeded:
-      return { ...state, loginNeeded: action.payload };
-    case GlobalActionTypes.StoreToken:
-      return { ...state, token: action.payload };
+
     default:
       return state;
   }
@@ -95,88 +89,49 @@ export function globalReducer(state = initialState, action: GlobalActions): Glob
 ### Actions
 
 ```ts
-export enum GlobalActionTypes {
-  SendUserMessage = '[Global] Show Message',
-  IsLoginNeeded = '[Auth] Is Login Needed',
-  StoreToken = '[Auth] Store Token'
+export enum UserActionTypes {
+  LoadUsers = '[USER]_Load',
+  SelectUser = '[USER]_Select',
+  AddUser = '[USER]_Add',
+  UpdateUser = '[USER]_Update',
+  DeleteUser = '[USER]_Delete',
+  CloseMessageUser = '[USER]_CloseMessage'
 }
 ```
 
 ```ts
-export class SendUserMesage implements Action {
-  readonly type = GlobalActionTypes.SendUserMessage;
-  constructor(public payload: string) {}
+export class LoadUsers implements Action {
+  readonly type = UserActionTypes.LoadUsers;
+  constructor(public readonly payload: User[]) {}
 }
 ```
 
 ```ts
-export type GlobalActions = SendUserMesage | IsLoginNeeded | StoreToken;
+export type UserActions = LoadUsers | SelectUser | AddUser | UpdateUser | DeleteUser | CloseMessageUser;
+
 ```
 
 ### Index y reducers
 
 ```ts
-import { ActionReducerMap, MetaReducer } from '@ngrx/store';
-import * as fromCar from './car.reducer';
-export interface State {
-  car: fromCar.State;
+import * as fromUser from './user.reducer';
+import * as fromInvoice from './user.reducer';
+
+
+export const rootStateFeatureKey = 'rootState';
+
+export interface RootState {
+  users: fromUser.State;
+  invoices: fromInvoice.State;
 }
-export const reducers: ActionReducerMap<State> = {
-  car: fromCar.reducer
+
+export const reducers: ActionReducerMap<RootState> = {
+  users: fromUser.reducer,
+  invoices: fromInvoice.reducer,
 };
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
-```
 
-### Feature
 
-```ts
-import { CarActions } from './car.actions';
-export interface State {
-  speed: number;
-}
-export const initialState: State = {
-  speed: 0
-};
-export function reducer(state = initialState, action:CarActions ):State {
-  switch (action.type) {
-    case CarActionTypes.Brake:
-      state.speed‐‐;
-      return { ...state };
-    case CarActionTypes.Throttle:
-      state.speed++;
-      return { ...state };
-    default:
-      return state;
-    }
-  }
-}
-```
-
-### dispatch y select
-
-```ts
-constructor(private store: Store<RootState>) {
-  this.store.dispatch(new SendUserMesage('Tutorial Angular en Español'));
-}
-```
-
-```ts
-this.store
-  .select('global', 'userMessage')
-  .subscribe(userMessage: string => console.log(userMessage));
-```
-
-### Acciones
-
-```ts
-import { Action } from '@ngrx/store';
-export enum CarActionTypes {
-  CarAction= '[Car] CarAction'
-}
-export class CarAction implements Action {
-  readonly type = CarActionTypes.CarAction;
-}
-export type CarActions = CarAction;
+export const metaReducers: MetaReducer<RootState>[] = !environment.production ? [] : [];
 ```
 
 ## Dispatch y select
@@ -204,8 +159,6 @@ http://extension.remotedev.io/
 StoreDevtoolsModule.instrument()
 ```
 
-## Ejercicio
 
-Realizar el ejercicio anterior utilizando la librería NgRx
 
-Ejercicio resuelto en el módulo *redux*.
+Ejercicio resuelto en el proyecto *ngrx*.
